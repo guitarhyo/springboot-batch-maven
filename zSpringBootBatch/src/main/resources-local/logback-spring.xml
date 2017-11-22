@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<!-- properties for LOCAL -->
+	<property name="LOG_HOME" value="C:/temp/logs" />
+	<property name="FILE_HISTORY" value="3" />
+	
+	<!-- Include defualts and appender -->
+	<include resource="org/springframework/boot/logging/logback/base.xml"/>
+	<include resource="logback-appender.xml"/>
+	
+	<!-- 로거 설정 -->
+	<logger name="FILE_LOG" additivity="true">
+		<level value="INFO" />
+		<appender-ref ref="FILE_CONSOLE" />
+	</logger>
+	
+	
+
+	<logger name="com.batch.zSpringBootBatch" level="debug"/>
+	
+	<logger name="jdbc" level="WARN" />
+    <logger name="java.sql" level="WARN" />
+	<logger name="jdbc.sqltiming" additivity="true">
+		<level value="INFO" />
+		<appender-ref ref="FILE_CONSOLE" />
+		<appender-ref ref="FILE_JDBC" />
+	</logger>
+	
+	<logger name="org.springframework" level="info" />
+	<logger name="org.springframework.jndi" level="error" />
+	<logger name="org.hibernate" level="error" />
+	<logger name="org.mybatis" level="info" />
+	
+</configuration>

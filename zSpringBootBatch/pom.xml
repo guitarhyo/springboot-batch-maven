@@ -1,0 +1,176 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.batch</groupId>
+  <artifactId>zSpringBootBatch</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>zSpringBootBatch</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java-version>1.7</java-version>
+		<org.slf4j-version>1.7.21</org.slf4j-version>
+		<ch.qos.logback-version>1.1.7</ch.qos.logback-version>
+		<maven.test.skip>true</maven.test.skip>
+		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+  </properties>
+  
+  	<repositories>
+		<repository>
+			<id>repo-mssql</id>
+			<name>MS-SQL JDBC Repository</name>
+			<url>http://clojars.org/repo/</url>
+		</repository>
+		<repository>
+			<id>repo-oracle</id>
+			<name>ORACLE JDBC Repository</name>
+			<url>http://maven.jahia.org/maven2</url>
+		</repository>
+	</repositories>
+	
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.7.RELEASE</version>
+	</parent>
+
+  <dependencies>
+  		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-batch</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+  	
+  		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.4</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>sqljdbc4</artifactId>
+			<version>4.0</version>
+		</dependency>
+
+		<!-- sql log util -->
+		<dependency>
+			<groupId>com.googlecode.log4jdbc</groupId>
+			<artifactId>log4jdbc</artifactId>
+			<version>1.2</version>
+		</dependency>
+		
+				<!-- oracle -->
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>12.1.0.2</version>
+		</dependency>
+
+		<!-- mysql -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.42</version>
+		</dependency>
+
+		<!-- FTP -->
+		<dependency>
+			<groupId>com.jcraft</groupId>
+			<artifactId>jsch</artifactId>
+			<version>0.1.54</version>
+		</dependency>
+
+
+		
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  
+  		<profiles>
+		<profile>
+			<id>local</id>
+			<properties>
+				<resources>resources-local</resources>
+				<rp.build.warname>LOC</rp.build.warname>
+			</properties>
+		</profile>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<resources>resources-dev</resources>
+				<rp.build.warname>DEV</rp.build.warname>
+			</properties>
+		</profile>
+		<profile>
+			<id>prd</id>
+			<properties>
+				<resources>resources-prd</resources>
+				<rp.build.warname>PRD</rp.build.warname>
+			</properties>
+		</profile>
+	</profiles>
+	
+	
+	<build>
+		<finalName>BATCH-${rp.build.warname}</finalName>
+		<resources>
+			<resource>
+				<directory>${project.basedir}/src/main/java</directory>
+				<includes>
+					<include>**/*Mapper.xml</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>${project.basedir}/src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>${project.basedir}/src/main/${resources}</directory>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>${java-version}</source>
+					<target>${java-version}</target>
+					<encoding>UTF-8</encoding>
+					<compilerArgument>-Xlint:all</compilerArgument>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

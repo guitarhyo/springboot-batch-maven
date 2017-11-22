@@ -1,0 +1,23 @@
+<included>
+	<appender name="FILE_CONSOLE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/batch-console.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/batch-console.%d{yyyy-MM}.log.gz</fileNamePattern>
+            <maxHistory>${FILE_HISTORY}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>[%d] [%-24thread] [%-5level] %-24logger{24} : %-4line - %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="FILE_JDBC" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/jdbc.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/jdbc.%d{yyyy-MM}.log.gz</fileNamePattern>
+			<maxHistory>${FILE_HISTORY}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>[%d] [%-24thread] %-5level - %msg%n</pattern>
+		</encoder>
+	</appender>
+</included>
