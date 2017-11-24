@@ -12,6 +12,8 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
@@ -44,7 +46,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 @EnableScheduling  		//스케줄러 사용 선언
 public class FtpTaskletStep2 { 
 
-
+	private static final Logger logger = LoggerFactory.getLogger(FtpTaskletStep2.class);
+	private static final Logger FILE_LOGGER = LoggerFactory.getLogger("FILE_LOG");
 	private static final String BATCH_NAME = "FtpTaskletStep2";
 	
 	@Value("${batch.file.path}")
