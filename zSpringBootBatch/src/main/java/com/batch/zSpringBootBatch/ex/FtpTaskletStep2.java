@@ -33,6 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -90,6 +91,7 @@ public class FtpTaskletStep2 {
 	 * @return
 	 */
 	@Bean
+	@Scope("prototype")
 	public Job baseJob() {
 		return jobBuilderFactory.get("[Job - " + BATCH_NAME + "]").incrementer(new RunIdIncrementer())
 				.flow(baseStep()).next(ftpStep()).end().build();
@@ -107,6 +109,7 @@ public class FtpTaskletStep2 {
 	 * @return
 	 */
 	@Bean
+	@Scope("prototype")
 	public Step baseStep() { //chunk 큰덩어리 프로세스단위
 		return stepBuilderFactory.get("[Step - " + BATCH_NAME + "]")
 				.<Map<Integer, Object>, Map<Integer, Object>>chunk(20).reader(sampleItemReader()).writer(sampleItemWriter())
@@ -125,6 +128,7 @@ public class FtpTaskletStep2 {
 	 * @return
 	 */
 	@Bean
+	
 	public Step ftpStep() { //chunk 큰덩어리 프로세스단위
 		return  stepBuilderFactory.get("[ftpStep - " + BATCH_NAME + "]").tasklet(tasklet()).build();
 	}
@@ -164,6 +168,7 @@ public class FtpTaskletStep2 {
 
 	
 	    @Bean
+	    @Scope("prototype")
 	    public ItemWriter<Map<Integer, Object>> sampleItemWriter() {
 	    	System.out.println("ItemWriter Started at :" + new Date());
 
